@@ -3,6 +3,10 @@ import ToDoData from "./components/todo/ToDoData";
 import ToDoNew from "./components/todo/ToDoNew";
 import reactLogo from './assets/react.svg';
 import { useState } from "react";
+import Header from "./components/layout/header";
+import Footer from "./components/layout/footer";
+
+
 const App = () => {
   const [todoList,setTodoList] = useState([
     // {id:1,name:"Learning React"},
@@ -29,7 +33,10 @@ const App = () => {
       setTodoList(newToDo);
   }
   return (
-    
+    <>
+    <Header/>
+
+
     <div>
       <div className="todo-container">
         <div className="todo-title">Todo List</div>
@@ -52,6 +59,8 @@ const App = () => {
         
       </div>
     </div>
+    <Footer/>
+    </>
   )
 }
 export default App;
