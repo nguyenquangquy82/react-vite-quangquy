@@ -1,7 +1,7 @@
 import "./components/todo/todo.css"
 import ToDoData from "./components/todo/ToDoData";
 import ToDoNew from "./components/todo/ToDoNew";
-import reactlogo from './assets/react.svg';
+import reactLogo from './assets/react.svg';
 import { useState } from "react";
 const App = () => {
   const [todoList,setTodoList] = useState([
@@ -16,8 +16,18 @@ const App = () => {
     country :"vietnam"
   }
   const addNewToDo = (name) =>{
-    alert(`call me ${name}`) 
+    const newToDo ={
+      id : randomIntFromInterval(1,100000000),
+      name : name
+    }
+    setTodoList([...todoList,newToDo])
+    // todoList.push(newToDo)
+    // // alert(`call me ${name}`) 
   }
+  const randomIntFromInterval = (min, max) => { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  
   
   return (
     
@@ -35,7 +45,7 @@ const App = () => {
           
         />
         <div className="todo-image"> 
-          <img src={reactlogo} className="logo"/>
+          <img src={reactLogo} className="logo"/>
         </div>
       </div>
     </div>

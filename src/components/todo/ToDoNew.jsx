@@ -8,7 +8,7 @@ const ToDoNew = (props)=>{
   const {addNewToDo} =props;
   // addNewToDo("cucu");
   const handleClick = () =>{
-      console.log(">>> check valueInput",valueInput)
+      addNewToDo(valueInput)
   }
   const handleOnChange =(name)=>{
    
