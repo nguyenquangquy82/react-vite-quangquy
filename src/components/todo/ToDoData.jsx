@@ -5,7 +5,7 @@ const ToDoData = (props) =>{
   //   age : 22,
   // }
   const {todoList} =props;
-  console.log(">>> check props todolist : ",todoList)
+
   return (
     <div className="todo-data">
          {todoList.map((item,index)=>{
@@ -18,9 +18,7 @@ const ToDoData = (props) =>{
           )
          })}
           
-          <div>
-              {JSON.stringify(props.todoList)}
-          </div>
+        
     </div>
     
   )
