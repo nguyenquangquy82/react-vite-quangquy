@@ -25,7 +25,7 @@
   gap:15px
 }
 
-.logo {
+logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -46,6 +46,7 @@
     transform: rotate(360deg);
   }
 }
+
 
 .todo-item{
   display: flex;
