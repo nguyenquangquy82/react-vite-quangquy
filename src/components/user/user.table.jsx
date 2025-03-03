@@ -1,6 +1,6 @@
-import { Space, Table, Tag } from 'antd';
+import { Table} from 'antd';
 import { fetchAllUserAPI } from '../../services/api.service';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const UserTable = () =>{
@@ -9,6 +9,11 @@ const UserTable = () =>{
     {_id:"cu em " , fullName:25,address:"dn"},
     {_id:"quangquyit" , fullName:25,email:"hcm"},
   ]);
+
+  useEffect(()=>{
+    console.log(">>> run usereffect 111")
+     loadUser();
+  },[]);
     
 
   const columns = [
@@ -35,14 +40,14 @@ const UserTable = () =>{
 
     const res =  await fetchAllUserAPI()
     
-    // setDataUsers(res.data)
+    setDataUsers(res.data)
   }
-  loadUser();
+  
 
-  console.log(">>> run render")
+  console.log(">>> run render  000")
   
   return (
-    <Table columns={columns} dataSource={dataUsers} />
+    <Table columns={columns} dataSource={dataUsers} rowKey={"_id"}/>
   )
 }
 export default UserTable;
