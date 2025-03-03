@@ -1,6 +1,6 @@
 
 
-import  Axios  from "./axios.customize";
+import  axios  from "./axios.customize";
 
 const createUserAPI = (fullName,email,password,phone) =>{
   const URL_BACKEND= "/api/v1/user";
@@ -10,7 +10,7 @@ const createUserAPI = (fullName,email,password,phone) =>{
     password:password,
     phone:phone
   }
-  return Axios.post(URL_BACKEND,data);
+  return axios.post(URL_BACKEND,data);
  
  }
 
