@@ -1,4 +1,4 @@
-import { Button, Input, notification } from "antd";
+import { Button, Input, notification,Modal } from "antd";
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";
 
@@ -7,22 +7,23 @@ const UserForm = () =>{
   const [email,setEmail] = useState("");
   const [password,setPassWord] = useState("");
   const [phone,setPhone] = useState("");
+
+  const[isModalOpen,setIsModalOpen] = useState(false);
+
+ 
   // console.log(">>> check form: ",fullName,email,password,phone)
- const handleClickBtn = async() =>{
+ const handleSubmitBtn = async() =>{
+    // alert("click me")
 
-  
 
-  
   const res= await createUserAPI(fullName,email,password,phone);
   // debugger
-
-
-
   if(res.data){
     notification.success({
       message:"create user",
       description: "Tạo user thành công"
     })
+    setIsModalOpen(false)
   }else {
     notification.error({
       message: "Error create",
@@ -33,12 +34,29 @@ const UserForm = () =>{
 
   
  }
-
-
+ 
+  
  
   return(
-    <div className="user-form" style={{margin:"20px 0"}}>
-        <div style={{display:"flex",gap:"12px",flexDirection:"column"}}>
+    <div className="user-form" style={{margin:"10px 0"}}>
+      
+        
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+          <h3> Table users</h3>
+            <Button
+            onClick={()=>setIsModalOpen(true)} type="primary">Create User</Button>
+          </div>
+      
+        <Modal 
+            title="Create User"
+            open={isModalOpen}
+            onOk={() => handleSubmitBtn()}
+            onCancel={() => setIsModalOpen(false)}
+            maskClosable={false}
+            okText="Create"
+           
+        >
+        <div style={{display:"flex",gap:"15px",flexDirection:"column"}}>
           <div> 
               <span>Full name</span>
               <Input value={fullName}
@@ -64,11 +82,8 @@ const UserForm = () =>{
                 onChange={(event)=>{setPhone(event.target.value)}}
               />
           </div>
-          <div>
-            <Button
-            onClick={()=>handleClickBtn()} type="primary">Create User</Button>
           </div>
-        </div>
+      </Modal>
     </div>
   )
 }
