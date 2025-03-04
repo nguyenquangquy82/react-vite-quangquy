@@ -2,13 +2,14 @@ import { Table,Input,notification,Modal} from 'antd';
 import { useEffect, useState } from 'react';
 import {DeleteOutlined, EditOutlined   } from '@ant-design/icons';
 
-import { createUserAPI } from "../../services/api.service";
+import { createUserAPI, updateUserAPI } from "../../services/api.service";
 const UpdateUserModal = (props) =>{
   const [id,setId] = useState("");
   const [fullName,setFullName] = useState("");
   const [phone,setPhone] = useState("");
 
-    const {isModalUpdateOpen,setIsModalUpdateOpen,dataUpdate,setDataUpdate } =props;
+    const {isModalUpdateOpen,setIsModalUpdateOpen,
+      dataUpdate,setDataUpdate,loadUser } =props;
    useEffect(()=>{
     console.log("check dataupdate props: ",dataUpdate)
     if(dataUpdate){
@@ -19,15 +20,15 @@ const UpdateUserModal = (props) =>{
    },[dataUpdate])
    const handleSubmitBtn = async() =>{
   
-    const res= await createUserAPI(fullName,email,password,phone);
+    const res= await updateUserAPI(id,fullName,phone);
     // debugger
     if(res.data){
       notification.success({
-        message:"create user",
-        description: "Tạo user thành công"
+        message:"Update user",
+        description: "Cap nhat user thành công"
       })
       resetAndCloseModal();
-      // await loadUser();
+      await loadUser();
     }else {
       notification.error({
         message: "Error create",
