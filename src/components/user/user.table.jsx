@@ -1,18 +1,17 @@
-import { Table} from 'antd';
+import { notification,Popconfirm, Table} from 'antd';
 import { useState } from 'react';
 import {DeleteOutlined, EditOutlined   } from '@ant-design/icons';
 import UpdateUserModal from './update.user.modal';
 import ViewUserDetail from './view.user.detail';
-
+import { deleteUserAPI } from '../../services/api.service';
 
 const UserTable = (props) =>{
   const {dataUsers,loadUser} = props;
+  console.log(dataUsers)
   const[isModalUpdateOpen,setIsModalUpdateOpen] = useState(false);
   const [dataUpdate,setDataUpdate] = useState(null)
-
   const [dataDetail,setDataDetail] = useState(null)
   const [isDetailOpen,setIsDetailOpen] = useState(false)
-  
   const columns = [
     {
       title: 'Id',
@@ -49,13 +48,67 @@ const UserTable = (props) =>{
           <EditOutlined  onClick={()=>{
             setDataUpdate(record);
             setIsModalUpdateOpen(true);
-          }}  style={{"cursor":"pointer" , color:"blue"} } />       
+          }}  style={{"cursor":"pointer" , color:"blue"} } />
+            <Popconfirm
+                title="Xóa người dùng"
+                description="Bạn chắc chắn xóa user này?"
+                onConfirm={() => deleUser(record._id)}
+                okText="Yes"
+                cancelText="No"
+                placement="left"
+              >      
           <DeleteOutlined style={{"cursor":"pointer", color:"red"}} />
+          </Popconfirm> 
       </div>   
       ),
     },
   ];
- 
+  const deleUser = async (id)=>{
+    try {
+      const res = await deleteUserAPI(id);
+      if(res.data){
+        notification.success({
+          message: "Delete user",
+          description: "Xóa user thành công"
+        });
+        await loadUser();
+      }else{
+        notification.error({
+          message: "Errors delete user",
+          description: JSON.stringify(res.message)
+        });
+      }
+  
+           //   const res = await deleteUserAPI(id);
+  //   if (res.data) {
+  //     notification.success({
+  //       message: "Delete user",
+  //       description: "Xóa user thành công"
+  //     });
+  //     await loadUser();
+  //   } else {
+  //     notification.error({
+  //       message: "Errors delete user",
+  //       description: JSON.stringify(res.message)
+  //     });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  // const handleDeleteUser = async (id) => {
+  //   const res = await deleteUserAPI(id);
+  //   if (res.data) {
+  //     notification.success({
+  //       message: "Delete user",
+  //       description: "Xóa user thành công"
+  //     });
+  //     await loadUser();
+  //   } else {
+  //     notification.error({
+  //       message: "Errors delete user",
+  //       description: JSON.stringify(res.message)
+  //     });
+  //   }
   return (
     <>
     <Table columns={columns}
@@ -74,9 +127,8 @@ const UserTable = (props) =>{
       isDetailOpen={isDetailOpen}
       setIsDetailOpen={setIsDetailOpen}
       />
-     
-   
     </>
   )
-}
+  }
+
 export default UserTable;
