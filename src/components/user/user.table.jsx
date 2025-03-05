@@ -79,36 +79,12 @@ const UserTable = (props) =>{
         });
       }
   
-           //   const res = await deleteUserAPI(id);
-  //   if (res.data) {
-  //     notification.success({
-  //       message: "Delete user",
-  //       description: "Xóa user thành công"
-  //     });
-  //     await loadUser();
-  //   } else {
-  //     notification.error({
-  //       message: "Errors delete user",
-  //       description: JSON.stringify(res.message)
-  //     });
+    
     } catch (error) {
       console.log(error)
     }
   }
-  // const handleDeleteUser = async (id) => {
-  //   const res = await deleteUserAPI(id);
-  //   if (res.data) {
-  //     notification.success({
-  //       message: "Delete user",
-  //       description: "Xóa user thành công"
-  //     });
-  //     await loadUser();
-  //   } else {
-  //     notification.error({
-  //       message: "Errors delete user",
-  //       description: JSON.stringify(res.message)
-  //     });
-  //   }
+  
   return (
     <>
     <Table columns={columns}
