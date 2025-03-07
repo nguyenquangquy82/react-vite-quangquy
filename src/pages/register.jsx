@@ -100,14 +100,7 @@ const RegisterPage =() =>{
       
         <div>
           <Button onClick={()=>form.submit()} type="primary">Register</Button>
-          <Button onClick={()=>{
-            form.setFieldsValue({
-              email: "quangquyit@gmail.com",
-              fullname : "quangquy"
-            })
-            console.log("CC")
-           
-          }}>Test</Button>
+         
         </div>
     </div>
     </Form>
