@@ -5,32 +5,35 @@ import { useEffect, useState } from 'react';
 import { fetchAllUserAPI } from '../services/api.service';
 const UsersPage= () =>{
   const [dataUsers,setDataUsers] = useState([]);
-  const [current,setCurrent] = useState(1);
-  const [pageSize,setPageSize] = useState(5);
-  const [total,setTotal] = useState(0);
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [total, setTotal] = useState(0);
+  
    
-
+  
   useEffect(()=>{
+    
      loadUser();
-  },[]);
+  },[current,pageSize]); // +condition
+
 
   const loadUser = async() =>{
     const res =  await fetchAllUserAPI(current,pageSize)
     if(res.data){
       setDataUsers(res.data.result)
-      setCurrent(res.data.current);
-      setPageSize(res.data.pageSize);
-      setTotal(res.data.total);
-
+      setCurrent(res.data.meta.current);
+      setPageSize(res.data.meta.pageSize);
+      setTotal(res.data.meta.total);
     }
     
   }
+  console.log("check pagesize",pageSize)
   return (
    
           <div style={{padding:"20px"}}>
             <UserForm  loadUser= {loadUser}/>
             <UserTable 
-            dataUsers={dataUsers}
+              dataUsers={dataUsers}
               loadUser={loadUser}
               current={current}
               pageSize={pageSize}
@@ -38,6 +41,7 @@ const UsersPage= () =>{
               setCurrent={setCurrent}
               setPageSize={setPageSize}
               setTotal={setTotal}
+            
             />
 
           </div>

@@ -15,6 +15,7 @@ const UserTable = (props) =>{
   const [dataUpdate,setDataUpdate] = useState(null)
   const [dataDetail,setDataDetail] = useState(null)
   const [isDetailOpen,setIsDetailOpen] = useState(false)
+  
   const columns = [
     {
       title: "STT",
@@ -23,7 +24,7 @@ const UserTable = (props) =>{
         return (
         
        <>
-        {index +1}
+        {(index +1) + (current -1) * pageSize}
        </>
         
         )
@@ -102,43 +103,60 @@ const UserTable = (props) =>{
     }
   }
   const onChange = (pagination, filters, sorter, extra) => {
+    // setCurrent,setPageSize
+    // neu thay doi trang :current
+    if(pagination && pagination.current){
+      if(+pagination.current !== +current){
+        setCurrent(+pagination.current);// 5;
+      }
+    }
+    // neu thay doi tong so phan tu :PageSize
+    if(pagination && pagination.pageSize){
+      if(+pagination.pageSize !== +pageSize){
+        setPageSize(+pagination.pageSize);// 5;
+      }
+    }
+
     console.log(">>>check",{pagination,filters,sorter,extra})
     };
 
-  
+
+
+  console.log("check current",current)
   return (
     <>
-    <Table columns={columns}
-     dataSource={dataUsers} 
-     rowKey={"_id"}
-     pagination={
-      {
-      current: current,
-      pageSize: pageSize,
-      showSizeChanger: true,
-      total: total,
-      showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
-
-      } }
-      onChange={onChange}
-     />
+      <Table columns={columns}
+          dataSource={dataUsers} 
+          rowKey={"_id"}
+          pagination={
+          {
+          current: current,
+          pageSize: pageSize,
+          showSizeChanger: true,
+          total: total,
+          showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
       
-       
 
-    <UpdateUserModal
-      isModalUpdateOpen={isModalUpdateOpen} 
-      setIsModalUpdateOpen={setIsModalUpdateOpen}
-      dataUpdate ={dataUpdate}
-      setDataUpdate={setDataUpdate}
-      loadUser = {loadUser}
-    />
-    <ViewUserDetail
-      dataDetail={dataDetail}
-      setDataDetail={setDataDetail}
-      isDetailOpen={isDetailOpen}
-      setIsDetailOpen={setIsDetailOpen}
-      loadUser={loadUser}
-      />
+          } }
+          onChange={onChange}
+        />
+            
+          
+
+        <UpdateUserModal
+          isModalUpdateOpen={isModalUpdateOpen} 
+          setIsModalUpdateOpen={setIsModalUpdateOpen}
+          dataUpdate ={dataUpdate}
+          setDataUpdate={setDataUpdate}
+          loadUser = {loadUser}
+        />
+        <ViewUserDetail
+          dataDetail={dataDetail}
+          setDataDetail={setDataDetail}
+          isDetailOpen={isDetailOpen}
+          setIsDetailOpen={setIsDetailOpen}
+          loadUser={loadUser}
+          />
     </>
   )
   }
