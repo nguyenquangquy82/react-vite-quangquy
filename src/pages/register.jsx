@@ -1,4 +1,4 @@
-import { Button, Input ,Form, notification} from "antd";
+import { Button, Input ,Form, notification,Row,Col} from "antd";
 import { registerUserAPI } from "../services/api.service";
 import { useNavigate } from "react-router-dom";
 
@@ -32,21 +32,13 @@ const RegisterPage =() =>{
     form={form}
     layout="vertical"
     onFinish={onFinish}
- 
- 
-    
+    style={{margin:"10px"}}
+ >
+
   
-    // onFinishFailed={onFinishFailed}
-   
-  >
- 
-    <div style={{
-      margin:"50px",
-      // display:"flex",
-      // flexDirection:"column",
-   
-    }}>  
-      <Form.Item
+ <Row justify={"center"}>
+    <Col xs={24} md={8}>
+    <Form.Item
       label="Full Name"
       name="fullName"
       rules={[
@@ -58,6 +50,11 @@ const RegisterPage =() =>{
     >
       <Input />
     </Form.Item>
+    </Col>
+  </Row>
+   
+  <Row justify={"center"}>
+    <Col xs={24} md={8}>
     <Form.Item
       label="Email"
       name="email"
@@ -70,6 +67,10 @@ const RegisterPage =() =>{
     >
       <Input />
     </Form.Item>
+    </Col>
+  </Row>
+  <Row justify={"center"}>
+    <Col xs={24} md={8}>
     <Form.Item
       label="Password "
       name="password"
@@ -82,6 +83,10 @@ const RegisterPage =() =>{
     >
       <Input.Password />
     </Form.Item>
+    </Col>
+    </Row>
+  <Row justify={"center"}>
+    <Col xs={24} md={8}>
     <Form.Item
       label="Phone number"
       name="phone"
@@ -96,13 +101,17 @@ const RegisterPage =() =>{
     >
       <Input />
     </Form.Item>
+    </Col>
+  </Row>
     {/* <button type="submit">Register</button> */}
       
         <div>
           <Button onClick={()=>form.submit()} type="primary">Register</Button>
          
         </div>
-    </div>
+  
+
+   
     </Form>
   )
 }
