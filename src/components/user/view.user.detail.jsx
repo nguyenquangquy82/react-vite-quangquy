@@ -30,7 +30,6 @@ const ViewUserDetail = (props) =>{
   const handleUpdateUserAvatar =  async() => { 
     const  resUpload = await handleUploadFile(selectedFile,"avatar");
     if(resUpload.data){
-
       const newAvatar = resUpload.data.fileUploaded;
       const resUpdateAvatar = await updateUserAvatarAPI(
       newAvatar , dataDetail._id,dataDetail.fullName,dataDetail.phone
@@ -40,20 +39,24 @@ const ViewUserDetail = (props) =>{
         setSelectedFile(null);
         setPreview(null);
         await loadUser();
-        
         notification.success({
           message: "Update user Avatar ",
           description: "Cập nhật avatar thành công"
-        })
+        });
+        await resUpdateAvatar();
       } else {
         notification.error({
           message: "Error update file ",
           description: JSON.stringify(resUpdateAvatar.message)
         })
       }
- 
+    }else {
+      notification.error({
+        message: "Error upload file ",
+        description: JSON.stringify(resUpload.message)
+      })
     
-      await resUpdateAvatar();
+      
 
   }
 }
