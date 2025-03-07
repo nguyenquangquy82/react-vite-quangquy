@@ -1,4 +1,6 @@
-import { Drawer,Button } from "antd";
+import { Drawer,Button, notification } from "antd";
+import { useState } from "react";
+import { handleUploadFile, updateUserAPI, updateUserAvatarAPI } from "../../services/api.service";
 
 
 const ViewUserDetail = (props) =>{
@@ -6,8 +8,58 @@ const ViewUserDetail = (props) =>{
       dataDetail,
       setDataDetail,
       isDetailOpen,
-      setIsDetailOpen
+      setIsDetailOpen,
+      loadUser
   } = props;
+  const [selectedFile,setSelectedFile] = useState(null);
+  const [preview,setPreview] = useState(null);
+  const handleOnChangeFile = (event) =>{
+    if  (!event.target.files || event.target.files.length === 0){
+      setSelectedFile(null);
+      setPreview(null);
+      return;
+    }
+    const file = event.target.files[0];
+    if(file) {
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  }
+  
+
+  const handleUpdateUserAvatar =  async() => { 
+    const  resUpload = await handleUploadFile(selectedFile,"avatar");
+    if(resUpload.data){
+
+      const newAvatar = resUpload.data.fileUploaded;
+      const resUpdateAvatar = await updateUserAvatarAPI(
+      newAvatar , dataDetail._id,dataDetail.fullName,dataDetail.phone
+      ); 
+      if(resUpdateAvatar.data){
+        setIsDetailOpen(false);
+        setSelectedFile(null);
+        setPreview(null);
+        await loadUser();
+        
+        notification.success({
+          message: "Update user Avatar ",
+          description: "Cập nhật avatar thành công"
+        })
+      } else {
+        notification.error({
+          message: "Error update file ",
+          description: JSON.stringify(resUpdateAvatar.message)
+        })
+      }
+ 
+    
+      await resUpdateAvatar();
+
+  }
+}
+
+
+
   return (
     <Drawer
     width={"40vw"}
@@ -29,31 +81,53 @@ const ViewUserDetail = (props) =>{
         <p>Phone number: {dataDetail.phone}</p>
         <br />
         <p>Avatar:</p>
-        <div>
-            <img height={100} width={150}
+        <div style={{
+          marginTop:"10px",
+          height:"100px",
+          width:"150px",
+         
+     
+        }}>
+            <img style={{height:"100%" ,width:"150%",objectFit:"contain"}} 
              src= {`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${dataDetail.avatar}`} />
         </div>
         <div>
-              <label htmlFor="btnUpload" style={{
+              <label htmlFor='btnUpload' style={{
                 display:"block",
                 width:"fit-content",
                 marginTop:"15px",
                 padding:"5px 10px",
                 background: "orange",
                 borderRadius:"5px",
-                cursor:"pointer"
-          
-
+                cursor:"pointer",
+             
               }}>
               Upload avatar</label>
-              <input type="file" hidden id='btnUpload' />
+              <input type="file" hidden id='btnUpload'
+              onChange={(event)=>handleOnChangeFile(event)}
+               />
         </div>
+        {preview &&
+          <>
+              <div style={{
+                marginBottom:"15px",
+                marginTop:"10px",
+                height:"100px",
+                width:"150px",
+              }}>
+                  <img style={{height:"100%" ,width:"150%",objectFit:"contain"}} 
+                    src= {preview} />
+              </div>
+              <Button type='primary' onClick={()=>handleUpdateUserAvatar()}>Save</Button>
+          </>
+        }
         
-        {/* <Button type='primary'>Upload avatar</Button> */}
       </>
     ) : (
       <p>Không có dữ liệu</p>
-    )}
+    )
+    }
+     
   </Drawer>
   )
     

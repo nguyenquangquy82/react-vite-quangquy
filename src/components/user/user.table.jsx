@@ -7,7 +7,7 @@ import { deleteUserAPI } from '../../services/api.service';
 
 const UserTable = (props) =>{
   const {dataUsers,loadUser} = props;
-  console.log(dataUsers)
+
   const[isModalUpdateOpen,setIsModalUpdateOpen] = useState(false);
   const [dataUpdate,setDataUpdate] = useState(null)
   const [dataDetail,setDataDetail] = useState(null)
@@ -102,6 +102,7 @@ const UserTable = (props) =>{
       setDataDetail={setDataDetail}
       isDetailOpen={isDetailOpen}
       setIsDetailOpen={setIsDetailOpen}
+      loadUser={loadUser}
       />
     </>
   )

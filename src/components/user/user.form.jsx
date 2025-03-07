@@ -44,8 +44,6 @@ const UserForm = (props) =>{
 
   return(
     <div className="user-form" style={{margin:"10px 0"}}>
-      
-        
           <div style={{display:"flex",justifyContent:"space-between"}}>
           <h3> Table users</h3>
             <Button
