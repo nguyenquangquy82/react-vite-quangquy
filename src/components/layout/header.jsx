@@ -29,7 +29,7 @@ const Header =()=>{
         id: ""
       })
       message.success("Logout thành công.");
-      // navigate("/")
+      navigate("/")
     }
   }
   
