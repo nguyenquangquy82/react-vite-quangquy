@@ -3,7 +3,7 @@ import { useState } from "react";
 const ToDoNew = (props)=>{
   // const valueInput = "quangquy";
   const [valueInput, setValueInput] = useState("cc");
-  console.log("check point",props)
+  // console.log("check point",props)
   
   const {addNewToDo} =props;
   // addNewToDo("cucu");

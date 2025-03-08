@@ -20,7 +20,7 @@ const UserTable = (props) =>{
     {
       title: "STT",
       render: (_, record,index) => {
-        console.log(">>> check index: ",index)
+   
         return (
         
        <>
@@ -117,12 +117,12 @@ const UserTable = (props) =>{
       }
     }
 
-    console.log(">>>check",{pagination,filters,sorter,extra})
+    // console.log(">>>check",{pagination,filters,sorter,extra})
     };
 
 
 
-  console.log("check current",current)
+  // console.log("check current",current)
   return (
     <>
       <Table columns={columns}

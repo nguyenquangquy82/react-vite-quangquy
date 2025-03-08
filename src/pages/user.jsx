@@ -27,7 +27,7 @@ const UsersPage= () =>{
     }
     
   }
-  console.log("check pagesize",pageSize)
+  // console.log("check pagesize",pageSize)
   return (
    
           <div style={{padding:"20px"}}>
