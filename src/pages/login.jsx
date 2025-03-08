@@ -1,13 +1,30 @@
 import { Button, Input, Form, notification, Row, Col,Divider, message} from "antd";
-import { registerUserAPI } from "../services/api.service";
+import { loginAPI, registerUserAPI } from "../services/api.service";
 import {Link, useNavigate } from "react-router-dom";
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { useState } from "react";
 const LoginPage = () => {
   const [form] = Form.useForm();
-  const onFinish = async (value) => {
-    console.log(">>>check value:", value);
-  };
+  const [loading,setLoading] = useState(false);
+  const navigate = useNavigate();
+  const onFinish = async(values)=>{
+    setLoading(true )
+    const res = await loginAPI(values.email, values.password);
+    if(res.data){
+      message.success("Đăng nhập thành công")
+      navigate("/");
+      
+    } else {
+      notification.error({
+        message: "Error login",
+        description: JSON.stringify(res.message)
+      })
+
+    }
+    setLoading(false)
+
+  
+};
   return (
     <Row  justify={"center"}  style={{marginTop:"30px"}}>
         <Col xs={24} md={16} lg={8}>
@@ -28,7 +45,7 @@ const LoginPage = () => {
                   name="email"
                   rules={[
                       {
-                        require:true,
+                        required:true,
                         message:'Email không được để trống!',
                       },
                       {
@@ -45,7 +62,7 @@ const LoginPage = () => {
                   name="password"
                   rules={[
                     {
-                      require:true,
+                      required:true,
                       message:'Password không được để trống!',
                     }
                   ]}
@@ -58,7 +75,9 @@ const LoginPage = () => {
                     justifyContent:"space-between",
                     alignItems:"center"
                   }}>
-                    <Button type="primary" onClick={()=>form.submit()}>
+                    <Button 
+                    loading={loading}
+                    type="primary" onClick={()=>form.submit()}>
                       Login
                     </Button>
                     <Link to="/">Go to homepage <ArrowRightOutlined /></Link>
